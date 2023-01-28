@@ -1,9 +1,10 @@
 import './Home.css'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { TaskDetails , TaskForm } from '../../components/index'
+import { useTasksContext } from '../../hooks/useTasksContext'
 
 const Home = () => {
-  const [tasks, setTasks] = useState(null)
+  const {tasks, dispatch} = useTasksContext()
 
     useEffect(() => {
 
@@ -12,7 +13,7 @@ const Home = () => {
         const json = await response.json()
 
         if (response.ok) {
-            setTasks(json)
+            dispatch({type: 'SET_TASKS', payload: json})
         }
 
       }

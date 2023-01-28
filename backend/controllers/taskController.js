@@ -4,6 +4,24 @@ const mongoose = require('mongoose')
 const createTask = async (req, res) => {
     const {title, student, points, result} = req.body
 
+    let emptyFields = [] 
+    if(!title) {
+        emptyFields.push('title')
+    }
+    if(!student) {
+        emptyFields.push('student')
+    }
+    if(!points) {
+        emptyFields.push('points')
+    }
+    if(!result) {
+        emptyFields.push('result')
+    }
+    if(emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in all the fields', emptyFields })
+    }
+    
+
     try{
         const task = await Task.create({title, student, points, result})
         res.status(200).json(task)
